@@ -19,7 +19,7 @@
         {
             "id": 1,
             "task_name": "Tarefa número 1",
-            "description": "Informe o nome e preço do produto",
+            "description": "Informe o nome e preço do produto ",
             "fields": [
                 {
                     "id": 1,

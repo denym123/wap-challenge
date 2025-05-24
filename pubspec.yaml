@@ -10,12 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  #Internal
-  dio: ^5.8.0+1
-  flutter_modular: ^6.3.4
-  signals: ^6.0.2
-  json_rest_server: ^3.2.1
 
 dev_dependencies:
   flutter_test:
