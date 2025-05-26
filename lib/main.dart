@@ -7,8 +7,15 @@ import 'app/app.dart';
 import 'core/core.dart';
 
 void main() async {
-  runZonedGuarded(() async {
-    FlutterError.onError = (FlutterErrorDetails details) {};
-    runApp(ModularApp(module: AppModule(), child: const AppWidget()));
-  }, (error, stack) {});
+  runZonedGuarded(
+    () async {
+      FlutterError.onError = (FlutterErrorDetails details) {
+        ExceptionHandler(details.exception, details.stack);
+      };
+      runApp(ModularApp(module: AppModule(), child: const AppWidget()));
+    },
+    (error, stack) {
+      ExceptionHandler(error, stack);
+    },
+  );
 }
