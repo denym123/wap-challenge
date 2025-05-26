@@ -12,5 +12,6 @@ class AppModule extends Module {
   @override
   void routes(RouteManager r) {
     r.module('/', module: SplashModule());
+    r.module('/login', module: LoginModule());
   }
 }
