@@ -4,3 +4,4 @@ export 'life_cycle/life_cycle.dart';
 export 'exceptions/exceptions.dart';
 export 'handlers/handlers.dart';
 export 'constants/constants.dart';
+export 'generated/generated.dart';
