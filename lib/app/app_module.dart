@@ -12,5 +12,6 @@ class AppModule extends Module {
   void routes(RouteManager r) {
     r.module(Route.splash, module: SplashModule());
     r.module(Route.login, module: LoginModule());
+    r.module(Route.home, module: HomeModule());
   }
 }

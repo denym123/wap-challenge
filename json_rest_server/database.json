@@ -1,18 +1,39 @@
 {
     "users": [
         {
-            "login": "teste.mobile",
+            "id": 1,
+            "login": "joao.silva",
+            "password": "123456",
+            "name": "João Silva",
+            "profile": "Promotor"
+        },
+        {
+            "id": 2,
+            "login": "maria.santos",
+            "password": "123456",
+            "name": "Maria Santos",
+            "profile": "Promotor"
+        },
+        {
+            "id": 3,
+            "login": "pedro.oliveira",
+            "password": "123456",
+            "name": "Pedro Oliveira",
+            "profile": "Promotor"
+        },
+        {
+            "id": 4,
+            "login": "ana.rodrigues",
+            "password": "123456",
+            "name": "Ana Rodrigues",
+            "profile": "Promotor"
+        },
+        {
+            "id": 5,
+            "login": "teste.mobile2",
             "password": "1234",
             "name": "Nome de teste do usuário",
             "profile": "Promotor"
-        }
-    ],
-    "adm_users": [
-        {
-            "login": "denym",
-            "password": "123456",
-            "name": "Denym Filho",
-            "profile": "Administrador"
         }
     ],
     "tasks": [

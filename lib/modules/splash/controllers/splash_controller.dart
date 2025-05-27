@@ -4,6 +4,7 @@ import '../../../core/core.dart';
 import '../splash.dart';
 
 class SplashController with ControllerLifeCycle, SplashVariables {
+  final LocalSecureStorage _secureStorage = Modular.get<LocalSecureStorage>();
   final SplashRepository _splashRepository;
 
   SplashController({required SplashRepository splashRepository})
@@ -16,6 +17,13 @@ class SplashController with ControllerLifeCycle, SplashVariables {
 
   void initApp() async {
     await Future.delayed(const Duration(seconds: 2));
-    Modular.to.pushReplacementNamed('/login');
+    final accessToken = await _secureStorage.read(
+      LocalSecureStorageConstants.accessToken,
+    );
+    if (accessToken != null) {
+      Modular.to.pushReplacementNamed(Route.login);
+    } else {
+      Modular.to.pushReplacementNamed(Route.login);
+    }
   }
 }
