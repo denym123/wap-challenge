@@ -1,10 +1,36 @@
+import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../../core/core.dart';
+import '../../../core/handlers/future_handler.dart';
 import '../login.dart';
 
 class LoginController with ControllerLifeCycle, LoginVariables {
+  final LocalSecureStorage _secureStorage = Modular.get<LocalSecureStorage>();
   final LoginRepository _loginRepository;
 
-  LoginController({
-    required LoginRepository loginRepository,
-  }) : _loginRepository = loginRepository;
+  LoginController({required LoginRepository loginRepository})
+    : _loginRepository = loginRepository;
+
+  Future<void> login() async {
+    FutureHandler(
+      future: loginAS,
+      repositoryFunction: _loginRepository.login(
+        LoginRequestDto(
+          userName: userController.text,
+          password: passwordController.text,
+        ),
+      ),
+      onValue: (value) {
+        _secureStorage.write(
+          LocalSecureStorageConstants.accessToken,
+          value!.accessToken,
+        );
+        _secureStorage.write(
+          LocalSecureStorageConstants.refreshToken,
+          value.refreshToken,
+        );
+        Modular.to.navigate(Route.home);
+      },
+    ).call();
+  }
 }
