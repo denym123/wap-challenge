@@ -21,9 +21,9 @@ class SplashController with ControllerLifeCycle, SplashVariables {
       LocalSecureStorageConstants.accessToken,
     );
     if (accessToken != null) {
-      Modular.to.pushReplacementNamed(Route.login);
+      Modular.to.navigate(Route.home);
     } else {
-      Modular.to.pushReplacementNamed(Route.login);
+      Modular.to.navigate(Route.login);
     }
   }
 }

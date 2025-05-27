@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:signals/signals_core.dart';
+import 'package:signals/signals_flutter.dart';
 
 import '../../core/core.dart';
 import 'home.dart';
@@ -14,16 +16,40 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends PageLifeCycleState<HomeController, HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          SignalFutureBuilder(
-            future: controller.userAS,
-            builder: (context, snapshot) {
-              return Text(snapshot.data?.name ?? '');
-            },
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Watch((context) {
+                return SignalFutureBuilder(
+                  loadingWidget: const TitleWidgetSkeleton(),
+                  asyncState: controller.userAS.value,
+                  builder: (data) {
+                    return TitleWidget(title: data.name);
+                  },
+                );
+              }),
+              const SizedBox(height: 32),
+              Text(
+                "Todas as Tasks",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
+              Watch((context) {
+                return SignalFutureBuilder(
+                  loadingWidget: CircularProgressIndicator(),
+                  asyncState: controller.tasksAS.value,
+                  builder: (data) {
+                    return TaskList(tasks: data);
+                  },
+                );
+              }),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

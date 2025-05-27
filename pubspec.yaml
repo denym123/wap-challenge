@@ -19,6 +19,10 @@ dependencies:
   signals: ^6.0.2
   sqflite: ^2.4.2
 
+  #UI
+  shimmer: ^3.0.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
