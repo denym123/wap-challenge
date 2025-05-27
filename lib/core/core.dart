@@ -8,3 +8,4 @@ export 'generated/generated.dart';
 export 'storage/storage.dart';
 export 'models/models.dart';
 export 'stores/stores.dart';
+export 'extensions/extensions.dart';

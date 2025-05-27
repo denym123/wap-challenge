@@ -23,7 +23,10 @@ class FutureHandler<T> {
         })
         .catchError((Object e, StackTrace s) {
           future.value = AsyncError(e, s);
-          if (catchError != null) catchError!(e, s);
+          if (catchError != null) {
+            catchError!(e, s);
+            return;
+          }
           throw e;
         });
   }

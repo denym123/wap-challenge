@@ -1,3 +1,7 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/core.dart';
@@ -30,6 +34,11 @@ class LoginController with ControllerLifeCycle, LoginVariables {
           value.refreshToken,
         );
         Modular.to.navigate(Route.home);
+      },
+      catchError: (e, s) {
+        if ((e as DioException).response?.statusCode == HttpStatus.forbidden) {
+          Messages.error('Usuário ou senha inválidos');
+        }
       },
     ).call();
   }

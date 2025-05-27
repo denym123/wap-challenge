@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:signals/signals_flutter.dart';
 
 import '../../core/core.dart';
 import 'login.dart';
@@ -37,23 +38,32 @@ class _LoginPageState extends PageLifeCycleState<LoginController, LoginPage> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 74),
-                  LoginInputField(
-                    label: 'Usuário',
-                    controller: controller.userController,
-                  ),
+                  Watch((context) {
+                    return LoginInputField(
+                      label: 'Usuário',
+                      enabled: !controller.loginAS.isLoading,
+                      controller: controller.userController,
+                    );
+                  }),
                   SizedBox(height: 29),
-                  LoginInputField(
-                    label: 'Senha',
-                    controller: controller.passwordController,
-                    obscureText: true,
-                  ),
+                  Watch((context) {
+                    return LoginInputField(
+                      label: 'Senha',
+                      enabled: !controller.loginAS.isLoading,
+                      controller: controller.passwordController,
+                      obscureText: true,
+                    );
+                  }),
                   SizedBox(height: 30),
-                  PrimaryButton(
-                    onPressed: () {
-                      controller.login();
-                    },
-                    label: 'Entrar',
-                  ),
+                  Watch((context) {
+                    return PrimaryButton(
+                      onPressed: () {
+                        controller.login();
+                      },
+                      label: 'Entrar',
+                      isLoading: controller.loginAS.isLoading,
+                    );
+                  }),
                 ],
               ),
             ),

@@ -18,22 +18,25 @@ class ExceptionHandler {
     log(error.toString());
     log(stackTrace.toString());
 
-    GlobalException globalException = GlobalException(error, stackTrace);
+    GlobalException(error, stackTrace);
 
-    if (!kDebugMode) {
+    if (kDebugMode) {
       _handlerToModal(error);
     }
   }
 
   void _handlerToModal(Object e) {
     if (e.runtimeType != DioException) {
-      //TODO: chamar modal com a message padrao
+      Messages.error(_defaultErrorMessage);
       return;
     }
 
     //TODO: configurar crashlytics
     DioException dioException = e as DioException;
-    //TODO: chamar modal com a message da dioException ou a padrão, caso não tenha.
+
+    Messages.error(
+      dioException.response?.data['error'] ?? _defaultErrorMessage,
+    );
   }
 
   String? getMessage(DioException e) {

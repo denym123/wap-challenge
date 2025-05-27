@@ -53,9 +53,16 @@ class LoginInputField extends StatelessWidget {
             errorBorder: _defaultBorder(context).copyWith(
               borderSide: BorderSide(
                 color: Theme.of(context).colorScheme.error,
+                width: 1,
+              ),
+            ),
+            focusedErrorBorder: _defaultBorder(context).copyWith(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.error,
                 width: 2,
               ),
             ),
+            disabledBorder: _defaultBorder(context),
             label: Text(label ?? ''),
             errorMaxLines: 3,
             contentPadding: EdgeInsets.fromLTRB(14, 12.5, 14, 12),
