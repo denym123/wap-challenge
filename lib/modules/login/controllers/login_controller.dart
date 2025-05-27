@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -36,6 +35,8 @@ class LoginController with ControllerLifeCycle, LoginVariables {
         Modular.to.navigate(Route.home);
       },
       catchError: (e, s) {
+        // Normalmente o erro vem do retorno da API, mas como neste caso não,
+        // é necessário verificar o status code.
         if ((e as DioException).response?.statusCode == HttpStatus.forbidden) {
           Messages.error('Usuário ou senha inválidos');
         }
