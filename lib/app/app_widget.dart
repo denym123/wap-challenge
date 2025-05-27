@@ -15,9 +15,6 @@ class AppWidget extends StatelessWidget {
       title: UiConfig.title,
       theme: UiConfig.theme,
       routerConfig: Modular.routerConfig,
-      locale: const Locale('pt', 'BR'),
-      supportedLocales: const [Locale('pt', 'BR')],
-      localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
       builder: (context, child) {
         final MediaQueryData data = MediaQuery.of(context);
         return MediaQuery(

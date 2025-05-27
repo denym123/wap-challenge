@@ -23,17 +23,17 @@ class AppTextTheme {
     bodyLarge: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Inter',
+      fontFamily: 'Poppins',
     ),
     bodyMedium: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w500,
-      fontFamily: 'Inter',
+      fontFamily: 'Poppins',
     ),
     bodySmall: TextStyle(
       fontSize: 8,
       fontWeight: FontWeight.w400,
-      fontFamily: 'Inter',
+      fontFamily: 'Poppins',
     ),
   );
 }

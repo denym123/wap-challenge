@@ -10,7 +10,7 @@ class AppColors {
     return _instance!;
   }
 
-  Color get primaryColor => Colors.blue;
+  Color get primaryColor => Color(0xFF1F41BB);
   Color get dividerColor => const Color(0xFFDDDDDE);
   Color get dividerColorDarkMode => const Color(0xFF414040);
   Color get errorColor => const Color(0xFFFF3B3B);
