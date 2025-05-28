@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../core/constants/constants.dart';
 import '../home.dart';
 import 'task_widget.dart';
 
@@ -18,9 +19,7 @@ class TaskList extends StatelessWidget {
         itemBuilder: (context, index) {
           final task = tasks[index];
           return TaskWidget(
-            onTap: () {
-              Modular.to.pushNamed('/task-detail', arguments: task);
-            },
+            onTap: () {},
             taskStatus: task.taskStatus,
             percentage: task.percentage ?? 0,
             title: task.taskName,
