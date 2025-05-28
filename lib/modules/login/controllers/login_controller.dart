@@ -33,7 +33,7 @@ class LoginController with ControllerLifeCycle, LoginVariables {
             value.refreshToken,
           ),
         ]);
-        Modular.to.navigate(Route.home);
+        Modular.to.navigate(Routes.home);
       },
       catchError: (e, s) {
         // Normalmente o erro vem do retorno da API, mas como neste caso não,

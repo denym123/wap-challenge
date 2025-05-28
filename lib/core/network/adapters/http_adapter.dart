@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
 import '../../core.dart';
-import '../interceptors/auth_interceptor.dart';
 
 class HttpAdapter extends DioForNative {
   HttpAdapter() {
@@ -20,6 +19,10 @@ class HttpAdapter extends DioForNative {
   }
 
   void _configureInterceptors() {
-    interceptors.addAll([AuthInterceptor(), LoggerInterceptor()]);
+    interceptors.addAll([
+      AuthInterceptor(),
+      LoggerInterceptor(),
+      LogoutInterceptor(),
+    ]);
   }
 }

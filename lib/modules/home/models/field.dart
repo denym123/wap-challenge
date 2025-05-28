@@ -1,3 +1,5 @@
+import '../../../core/core.dart';
+
 class Field {
   final int id;
   final String label;
@@ -18,5 +20,15 @@ class Field {
       required: json['required'],
       fieldType: json['field_type'],
     );
+  }
+
+  Map<String, dynamic> toMap(int taskId) {
+    return {
+      'id': id,
+      'label': label,
+      'required': required.toDb(),
+      'field_type': fieldType,
+      'task_id': taskId,
+    };
   }
 }

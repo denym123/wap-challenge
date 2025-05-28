@@ -4,6 +4,8 @@ import '../../../core/core.dart';
 import '../home.dart';
 
 mixin HomeVariables {
-  AsyncSignal<List<Task>> tasksAS = AsyncSignal<List<Task>>(AsyncLoading());
+  AsyncSignal<List<TaskModel>> tasksAS = AsyncSignal<List<TaskModel>>(
+    AsyncLoading(),
+  );
   AsyncSignal<User> userAS = AsyncSignal<User>(AsyncLoading());
 }

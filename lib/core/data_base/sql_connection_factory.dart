@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:path/path.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,7 +10,7 @@ import 'data_base.dart';
 
 class SqliteConnectionFactory {
   static const _VERSION = 1;
-  static const _DATABASE_NAME = 'WAP_CHALLENGE';
+  static const _DATABASE_NAME = 'WAP_CHALLENGE.db';
 
   static SqliteConnectionFactory? _instance;
 
@@ -29,6 +31,7 @@ class SqliteConnectionFactory {
   Future<Database> openConnection() async {
     final databasePath = await getDatabasesPath();
     final databasePathFinal = join(databasePath, _DATABASE_NAME);
+    log('databasePathFinal: $databasePathFinal');
     if (_db == null) {
       await _lock.synchronized(() async {
         _db ??= await openDatabase(

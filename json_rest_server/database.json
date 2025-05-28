@@ -62,13 +62,13 @@
             "description": "Informe o nome do produto e data de vencimento",
             "fields": [
                 {
-                    "id": 1,
+                    "id": 3,
                     "label": "Nome do produto",
                     "required": true,
                     "field_type": "text"
                 },
                 {
-                    "id": 2,
+                    "id": 4,
                     "label": "Informe o preço",
                     "required": true,
                     "field_type": "mask_date"
@@ -81,13 +81,13 @@
             "description": "Informe o nome do cliente e nome da loja",
             "fields": [
                 {
-                    "id": 1,
+                    "id": 5,
                     "label": "Nome do cliente",
                     "required": true,
                     "field_type": "text"
                 },
                 {
-                    "id": 2,
+                    "id": 6,
                     "label": "nome da loja",
                     "required": true,
                     "field_type": "text"

@@ -15,19 +15,20 @@ class FutureHandler<T> {
   });
 
   Future<void> call() async {
-    future.value = AsyncLoading<T>();
-    repositoryFunction
-        .then((T response) {
-          future.value = AsyncData(response);
-          if (onValue != null) onValue!(response);
-        })
-        .catchError((Object e, StackTrace s) {
-          future.value = AsyncError(e, s);
-          if (catchError != null) {
-            catchError!(e, s);
-            return;
-          }
-          throw e;
-        });
+    try {
+      future.value = AsyncLoading<T>();
+      final response = await repositoryFunction;
+      future.value = AsyncData(response);
+      if (onValue != null) {
+        onValue!(response);
+      }
+    } catch (e, s) {
+      future.value = AsyncError(e, s);
+      if (catchError != null) {
+        catchError!(e, s);
+        return;
+      }
+      rethrow;
+    }
   }
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../home.dart';
 import 'task_widget.dart';
 
 class TaskList extends StatelessWidget {
-  final List<Task> tasks;
-  const TaskList({super.key, required this.tasks});
+  final HomeController controller;
+  final List<TaskModel> tasks;
+  const TaskList({super.key, required this.tasks, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,14 @@ class TaskList extends StatelessWidget {
         itemBuilder: (context, index) {
           final task = tasks[index];
           return TaskWidget(
+            onTap: () {
+              Modular.to.pushNamed('/task-detail', arguments: task);
+            },
+            taskStatus: task.taskStatus,
+            percentage: task.percentage ?? 0,
             title: task.taskName,
             subtitle: task.description,
-            answered: 2,
-            total: 4,
-            createdAt: DateTime.now().toString(),
+            createdAt: task.createdAt,
           );
         },
       ),

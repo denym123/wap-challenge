@@ -1,13 +1,13 @@
 import '../home.dart';
 
 class Task {
-  final int id;
+  final int taskId;
   final String taskName;
   final String description;
   final List<Field> fields;
 
   Task({
-    required this.id,
+    required this.taskId,
     required this.taskName,
     required this.description,
     required this.fields,
@@ -15,12 +15,21 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-      id: json['id'],
+      taskId: json['id'],
       taskName: json['task_name'],
       description: json['description'],
       fields: List<Field>.from(
         (json['fields'] as List).map((e) => Field.fromJson(e)),
       ),
     );
+  }
+
+  Map<String, dynamic> toMap(int userId) {
+    return {
+      'id': taskId,
+      'task_name': taskName,
+      'description': description,
+      'user_id': userId,
+    };
   }
 }

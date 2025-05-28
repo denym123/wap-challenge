@@ -32,7 +32,7 @@ class ExceptionHandler {
     }
 
     //TODO: configurar crashlytics
-    DioException dioException = e as DioException;
+    final DioException dioException = e as DioException;
 
     Messages.error(
       dioException.response?.data['error'] ?? _defaultErrorMessage,
