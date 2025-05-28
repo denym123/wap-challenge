@@ -1,18 +1,39 @@
 {
     "users": [
         {
-            "login": "teste.mobile",
+            "id": 1,
+            "login": "joao.silva",
+            "password": "123456",
+            "name": "João Silva",
+            "profile": "Promotor"
+        },
+        {
+            "id": 2,
+            "login": "maria.santos",
+            "password": "123456",
+            "name": "Maria Santos",
+            "profile": "Promotor"
+        },
+        {
+            "id": 3,
+            "login": "pedro.oliveira",
+            "password": "123456",
+            "name": "Pedro Oliveira",
+            "profile": "Promotor"
+        },
+        {
+            "id": 4,
+            "login": "ana.rodrigues",
+            "password": "123456",
+            "name": "Ana Rodrigues",
+            "profile": "Promotor"
+        },
+        {
+            "id": 5,
+            "login": "teste.mobile2",
             "password": "1234",
             "name": "Nome de teste do usuário",
             "profile": "Promotor"
-        }
-    ],
-    "adm_users": [
-        {
-            "login": "denym",
-            "password": "123456",
-            "name": "Denym Filho",
-            "profile": "Administrador"
         }
     ],
     "tasks": [
@@ -41,13 +62,13 @@
             "description": "Informe o nome do produto e data de vencimento",
             "fields": [
                 {
-                    "id": 1,
+                    "id": 3,
                     "label": "Nome do produto",
                     "required": true,
                     "field_type": "text"
                 },
                 {
-                    "id": 2,
+                    "id": 4,
                     "label": "Informe o preço",
                     "required": true,
                     "field_type": "mask_date"
@@ -60,13 +81,13 @@
             "description": "Informe o nome do cliente e nome da loja",
             "fields": [
                 {
-                    "id": 1,
+                    "id": 5,
                     "label": "Nome do cliente",
                     "required": true,
                     "field_type": "text"
                 },
                 {
-                    "id": 2,
+                    "id": 6,
                     "label": "nome da loja",
                     "required": true,
                     "field_type": "text"

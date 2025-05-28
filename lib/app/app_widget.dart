@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter/cupertino.dart';
 
-import '../core/ui/ui.dart';
+import '../core/core.dart';
 
-class AppWidget extends StatelessWidget {
+class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
+
+  @override
+  State<AppWidget> createState() => _AppWidgetState();
+}
+
+class _AppWidgetState extends State<AppWidget> {
+  final sqliteAdmConnection = SqliteAdmConnection();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(sqliteAdmConnection);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(sqliteAdmConnection);
+  }
 
   @override
   Widget build(BuildContext context) {

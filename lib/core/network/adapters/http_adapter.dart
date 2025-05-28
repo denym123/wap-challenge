@@ -19,6 +19,10 @@ class HttpAdapter extends DioForNative {
   }
 
   void _configureInterceptors() {
-    interceptors.addAll([LoggerInterceptor()]);
+    interceptors.addAll([
+      AuthInterceptor(),
+      LoggerInterceptor(),
+      LogoutInterceptor(),
+    ]);
   }
 }

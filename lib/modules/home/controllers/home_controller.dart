@@ -1,0 +1,97 @@
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../core/core.dart';
+import '../../../core/handlers/future_cached_handler.dart';
+import '../home.dart';
+
+class HomeController with ControllerLifeCycle, HomeVariables {
+  final HomeRepository _homeRepository;
+  final UserStore _userStore = Modular.get<UserStore>();
+  final HomeDao _homeDao;
+
+  HomeController({
+    required HomeRepository homeRepository,
+    required HomeDao homeDao,
+  }) : _homeRepository = homeRepository,
+       _homeDao = homeDao;
+
+  @override
+  void onReady() async {
+    await getUser();
+    getTasks();
+  }
+
+  Future<void> getTasks() async {
+    MultiFutureHandler(
+      apiFunction: _homeRepository.getTasks(),
+      dbFunction: _homeDao.getTaskInstances(),
+      resultBuilder: (db, api) async => _buildTaskModels(db, api),
+      future: tasksAS,
+    ).call();
+  }
+
+  Future<void> clearTaskInstances() async {
+    await _homeDao.clearTaskInstances();
+    getTasks();
+  }
+
+  Future<void> getUser() async {
+    await FutureHandler(
+      future: userAS,
+      repositoryFunction: _homeRepository.getUser(),
+      onValue: (value) async {
+        Future.wait([
+          LocalSecureStorageImpl().write(
+            LocalSecureStorageConstants.userId,
+            value.id.toString(),
+          ),
+          LocalSecureStorageImpl().write(
+            LocalSecureStorageConstants.userName,
+            value.name,
+          ),
+        ]);
+      },
+    ).call();
+  }
+
+  List<TaskModel> _buildTaskModels(
+    List<TaskInstance> taskInstances,
+    List<Task> tasks,
+  ) {
+    final List<TaskModel> taskModels = [];
+
+    for (var task in tasks) {
+      final instances =
+          taskInstances
+              .where((instance) => instance.taskId == task.taskId)
+              .toList();
+
+      final bool noInstanceInDb = instances.isEmpty;
+
+      if (noInstanceInDb) {
+        taskModels.add(
+          TaskModel(
+            taskId: task.taskId,
+            taskName: task.taskName,
+            description: task.description,
+            taskStatus: TaskStatus.notStarted,
+          ),
+        );
+      } else {
+        for (var instance in instances) {
+          taskModels.add(
+            TaskModel(
+              taskName: task.taskName,
+              description: task.description,
+              taskStatus: instance.taskStatus,
+              createdAt: instance.createdAt.toString(),
+              taskId: task.taskId,
+            ),
+          );
+        }
+      }
+    }
+
+    return taskModels;
+  }
+}

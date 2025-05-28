@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/core.dart';
-import '../../../core/handlers/future_handler.dart';
 import '../login.dart';
 
 class LoginController with ControllerLifeCycle, LoginVariables {
@@ -23,16 +22,18 @@ class LoginController with ControllerLifeCycle, LoginVariables {
           password: passwordController.text,
         ),
       ),
-      onValue: (value) {
-        _secureStorage.write(
-          LocalSecureStorageConstants.accessToken,
-          value!.accessToken,
-        );
-        _secureStorage.write(
-          LocalSecureStorageConstants.refreshToken,
-          value.refreshToken,
-        );
-        Modular.to.navigate(Route.home);
+      onValue: (value) async {
+        await Future.wait([
+          _secureStorage.write(
+            LocalSecureStorageConstants.accessToken,
+            value!.accessToken,
+          ),
+          _secureStorage.write(
+            LocalSecureStorageConstants.refreshToken,
+            value.refreshToken,
+          ),
+        ]);
+        Modular.to.navigate(Routes.home);
       },
       catchError: (e, s) {
         // Normalmente o erro vem do retorno da API, mas como neste caso não,
