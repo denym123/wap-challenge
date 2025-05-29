@@ -69,7 +69,7 @@
                 },
                 {
                     "id": 4,
-                    "label": "Informe o preço",
+                    "label": "Informe a data",
                     "required": true,
                     "field_type": "mask_date"
                 }

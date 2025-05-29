@@ -1,5 +1,3 @@
-import 'package:flutter_modular/flutter_modular.dart';
-
 import '../../../core/core.dart';
 import '../../../core/handlers/multi_future_handler.dart';
 import '../home.dart';
@@ -26,6 +24,11 @@ class HomeController with ControllerLifeCycle, HomeVariables {
       firstFunction: _homeDao.getTaskInstances(),
       resultBuilder: (db, api) async => _buildTaskModels(db, api),
       future: tasksAS,
+      noConnectionBuilder: () async {
+        final tasks = await _homeDao.getTasks();
+        final taskInstances = await _homeDao.getTaskInstances();
+        return _buildTaskModels(taskInstances, tasks);
+      },
     ).call();
   }
 
@@ -38,6 +41,15 @@ class HomeController with ControllerLifeCycle, HomeVariables {
     await FutureHandler(
       future: userAS,
       repositoryFunction: _homeRepository.getUser(),
+      noConnectionBuilder: () async {
+        final userId = await LocalSecureStorageImpl().read(
+          LocalSecureStorageConstants.userId,
+        );
+        final userName = await LocalSecureStorageImpl().read(
+          LocalSecureStorageConstants.userName,
+        );
+        return User(id: int.parse(userId!), name: userName!);
+      },
       onValue: (value) async {
         Future.wait([
           LocalSecureStorageImpl().write(

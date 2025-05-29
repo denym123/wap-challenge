@@ -13,7 +13,7 @@ class HomeDao extends RepositoryLifeCycle {
         task.toMap(userId),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      for (var field in task.fields) {
+      for (var field in task.fields!) {
         batch.insert(
           Tables.field,
           field.toMap(taskId),
@@ -28,6 +28,12 @@ class HomeDao extends RepositoryLifeCycle {
     final db = await SqliteConnectionFactory().database;
     final taskInstances = await db.query(Tables.taskInstance);
     return taskInstances.map((e) => TaskInstance.fromJson(e)).toList();
+  }
+
+  Future<List<Task>> getTasks() async {
+    final db = await SqliteConnectionFactory().database;
+    final tasks = await db.query(Tables.task);
+    return List.from(tasks.map((e) => Task.fromMap(e)));
   }
 
   Future<void> createTaskInstance(TaskInstance task) async {

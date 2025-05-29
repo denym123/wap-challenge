@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:signals/signals.dart';
 
 class MultiFutureHandler<F, S, T> {
@@ -7,11 +8,14 @@ class MultiFutureHandler<F, S, T> {
 
   final Future<S> secondFunction;
 
+  final Future<T> Function()? noConnectionBuilder;
+
   final Future<T> Function(F firstResult, S secondResult) resultBuilder;
   Future? Function(T value)? onValue;
   void Function(Object e, StackTrace s)? catchError;
 
   MultiFutureHandler({
+    this.noConnectionBuilder,
     required this.future,
     required this.firstFunction,
     required this.secondFunction,
@@ -33,6 +37,15 @@ class MultiFutureHandler<F, S, T> {
       }
       future.value = AsyncData<T>(merged);
     } catch (e, s) {
+      if (e is DioException &&
+          e.type == DioExceptionType.connectionError &&
+          noConnectionBuilder != null) {
+        await noConnectionBuilder!().then((value) {
+          future.value = AsyncData<T>(value);
+        });
+        return;
+      }
+
       future.value = AsyncError(e, s);
       if (catchError != null) {
         catchError!(e, s);

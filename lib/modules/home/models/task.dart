@@ -4,13 +4,13 @@ class Task {
   final int taskId;
   final String taskName;
   final String description;
-  final List<Field> fields;
+  final List<Field>? fields;
 
   Task({
     required this.taskId,
     required this.taskName,
     required this.description,
-    required this.fields,
+    this.fields,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -21,6 +21,14 @@ class Task {
       fields: List<Field>.from(
         (json['fields'] as List).map((e) => Field.fromJson(e)),
       ),
+    );
+  }
+
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      taskId: map['id'],
+      taskName: map['task_name'],
+      description: map['description'],
     );
   }
 
