@@ -63,7 +63,7 @@
             "fields": [
                 {
                     "id": 3,
-                    "label": "Nome do produto",
+                    "label": "Data de vencimento",
                     "required": true,
                     "field_type": "text"
                 },
