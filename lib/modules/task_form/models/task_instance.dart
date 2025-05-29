@@ -16,9 +16,9 @@ class TaskInstance {
   factory TaskInstance.fromMap(Map<String, dynamic> json) {
     return TaskInstance(
       id: json['id'],
-
       taskId: json['task_id'],
       createdAt: json['created_at'],
+      taskStatus: TaskStatus.values[json['task_status']],
     );
   }
 

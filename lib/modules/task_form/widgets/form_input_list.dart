@@ -2,6 +2,7 @@ import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../core/extensions/extensions.dart';
 
+import '../../home/enums/task_status.dart';
 import '../models/field.dart';
 import '../task_form.dart';
 import 'form_input.dart';
@@ -26,6 +27,8 @@ class FormInputList extends StatelessWidget {
           final field = fields[index];
           return FormInput(
             label: field.label ?? '',
+            isReadOnly:
+                controller.taskInstance?.taskStatus == TaskStatus.completed,
             inputFormatters: [
               TextInputMask(
                 mask: [field.fieldType.toFieldType().mask],

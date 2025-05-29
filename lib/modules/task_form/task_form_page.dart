@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 
 import '../../core/core.dart';
+import '../home/enums/enums.dart';
 import 'task_form.dart';
-import 'widgets/form_input.dart';
 import 'widgets/form_input_list.dart';
 
 class TaskFormPage extends StatefulWidget {
@@ -52,14 +52,23 @@ class _TaskFormPageState
                         controller: controller,
                         fields: data.fields!,
                       ),
-                      PrimaryButton(
-                        label: "Submit",
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            controller.submitTask();
-                          }
-                        },
-                      ),
+                      if (controller.taskInstance?.taskStatus !=
+                          TaskStatus.completed) ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: PrimaryButton(
+                                label: "Finalizar",
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    controller.submitTask();
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   );
                 },

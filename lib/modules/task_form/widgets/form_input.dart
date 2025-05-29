@@ -5,6 +5,7 @@ class FormInput extends StatelessWidget {
   final TextEditingController controller;
   final Function()? onChanged;
   final String label;
+  final bool? isReadOnly;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
@@ -17,11 +18,13 @@ class FormInput extends StatelessWidget {
     this.onChanged,
     required this.label,
     this.inputFormatters,
+    this.isReadOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: isReadOnly == false,
       onChanged: (value) {
         onChanged!();
       },

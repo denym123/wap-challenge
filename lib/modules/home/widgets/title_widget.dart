@@ -6,6 +6,6 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Olá, $title', style: Theme.of(context).textTheme.titleLarge);
+    return Text(title, style: Theme.of(context).textTheme.titleLarge);
   }
 }
