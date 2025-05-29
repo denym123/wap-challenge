@@ -10,3 +10,4 @@ export 'models/models.dart';
 export 'stores/stores.dart';
 export 'extensions/extensions.dart';
 export 'data_base/data_base.dart';
+export 'helpers/helpers.dart';

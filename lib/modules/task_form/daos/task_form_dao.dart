@@ -71,6 +71,16 @@ class TaskFormDao {
     return result.isNotEmpty ? FieldResponse.fromMap(result.first) : null;
   }
 
+  Future<void> updateTaskInstance(TaskInstance taskInstance) async {
+    final db = await SqliteConnectionFactory().database;
+    await db.update(
+      Tables.taskInstance,
+      taskInstance.toMap(),
+      where: 'task_id =?',
+      whereArgs: [taskInstance.id],
+    );
+  }
+
   Future<void> updateFieldResponse(FieldResponse fieldResponse) async {
     final db = await SqliteConnectionFactory().database;
     await db.update(

@@ -30,7 +30,7 @@
         },
         {
             "id": 5,
-            "login": "teste.mobile2",
+            "login": "teste.mobile",
             "password": "1234",
             "name": "Nome de teste do usuário",
             "profile": "Promotor"

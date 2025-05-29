@@ -8,7 +8,9 @@ import '../../core.dart';
 class LogoutInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (err.response?.statusCode == HttpStatus.forbidden) {
+    final bool isForbidden = err.response?.statusCode == HttpStatus.forbidden;
+
+    if (isForbidden) {
       Modular.to.navigate(Routes.login);
     }
     handler.next(err);

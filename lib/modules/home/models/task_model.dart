@@ -4,7 +4,6 @@ class TaskModel {
   final int taskId;
   final String taskName;
   final String description;
-  final double? percentage;
   final String? createdAt;
   final TaskStatus taskStatus;
 
@@ -13,7 +12,6 @@ class TaskModel {
     required this.taskStatus,
     required this.taskName,
     required this.description,
-    this.percentage,
     this.createdAt,
   });
 }

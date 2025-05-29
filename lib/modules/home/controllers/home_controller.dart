@@ -1,12 +1,11 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/core.dart';
-import '../../../core/handlers/future_cached_handler.dart';
+import '../../../core/handlers/multi_future_handler.dart';
 import '../home.dart';
 
 class HomeController with ControllerLifeCycle, HomeVariables {
   final HomeRepository _homeRepository;
-  final UserStore _userStore = Modular.get<UserStore>();
   final HomeDao _homeDao;
 
   HomeController({
@@ -23,8 +22,8 @@ class HomeController with ControllerLifeCycle, HomeVariables {
 
   Future<void> getTasks() async {
     MultiFutureHandler(
-      apiFunction: _homeRepository.getTasks(),
-      dbFunction: _homeDao.getTaskInstances(),
+      secondFunction: _homeRepository.getTasks(),
+      firstFunction: _homeDao.getTaskInstances(),
       resultBuilder: (db, api) async => _buildTaskModels(db, api),
       future: tasksAS,
     ).call();

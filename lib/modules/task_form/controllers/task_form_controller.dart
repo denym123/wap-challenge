@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import '../../../core/core.dart';
+import '../../../core/handlers/multi_future_handler.dart';
+import '../../home/controllers/home_controller.dart';
+import '../../home/enums/task_status.dart';
 import '../daos/task_form_dao.dart';
-import '../models/models.dart';
+import '../models/task.dart';
 import '../task_form.dart';
 
 class TaskFormController with ControllerLifeCycle, TaskFormVariables {
@@ -19,6 +23,18 @@ class TaskFormController with ControllerLifeCycle, TaskFormVariables {
     buildTask();
   }
 
+  void onFieldChanged(int fieldId) {
+    debouncer.run(() {
+      updateFieldResponse(fieldId);
+    });
+  }
+
+  void buildControllers(Task task) {
+    controllers = Map.fromEntries(
+      task.fields!.map((field) => MapEntry(field.id, TextEditingController())),
+    );
+  }
+
   Future<void> updateFieldResponse(int fieldId) async {
     final fieldResponse = await _taskFormDao.getFieldResponse(
       taskInstance!.id,
@@ -29,24 +45,29 @@ class TaskFormController with ControllerLifeCycle, TaskFormVariables {
   }
 
   Future<void> buildTask() async {
-    final Task task = await _taskFormDao.getTask(taskId!);
-    final fields = await _taskFormDao.getFields(taskId!);
-    task.fields = fields;
-    this.task = task;
-    controllers = Map.fromEntries(
-      fields.map((field) => MapEntry(field.id, TextEditingController())),
-    );
-    await createTaskInstance();
+    await MultiFutureHandler(
+      future: taskAS,
+      firstFunction: _taskFormDao.getTask(taskId!),
+      secondFunction: _taskFormDao.getFields(taskId!),
+      resultBuilder: (task, fields) async {
+        task.fields = fields;
+        return task;
+      },
+      onValue: (task) async {
+        buildControllers(task);
+        await createTaskInstance(task);
+      },
+    ).call();
   }
 
-  Future<void> createTaskInstance() async {
+  Future<void> createTaskInstance(Task task) async {
     taskInstance = await _taskFormDao.getTaskInstance(taskId!);
     if (taskInstance == null) {
       await _taskFormDao.createTaskInstance(taskId!);
-      createTaskInstance();
+      createTaskInstance(task);
       return;
     }
-    for (var field in task!.fields!) {
+    for (var field in task.fields!) {
       final fieldResponse = await _taskFormDao.getFieldResponse(
         taskInstance!.id,
         field.id,
@@ -60,14 +81,14 @@ class TaskFormController with ControllerLifeCycle, TaskFormVariables {
           controllers[field.id]!.text,
         );
       }
+      Modular.get<HomeController>().getTasks();
     }
   }
 
   Future<void> submitTask() async {
-    final List<String> anwsers = [];
-    for (var controller in controllers.values) {
-      anwsers.add(controller.text);
-    }
-    print(anwsers);
+    taskInstance!.taskStatus = TaskStatus.completed;
+    await _taskFormDao.updateTaskInstance(taskInstance!);
+    Modular.get<HomeController>().getTasks();
+    Modular.to.pop();
   }
 }

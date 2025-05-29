@@ -1,10 +1,15 @@
 enum FieldType {
-  text(name: 'text', mask: ''),
-  maskPrice(name: 'mask-price', mask: 'R\$ 000,00'),
-  maskDate(name: 'mask-date', mask: '00/00/0000');
+  text(name: 'text', mask: 'X+', isReverse: false),
+  maskPrice(name: 'mask_price', mask: '\$! !9+,99', isReverse: true),
+  maskDate(name: 'mask_date', mask: '99/99/9999', isReverse: false);
 
-  const FieldType({required this.name, required this.mask});
+  const FieldType({
+    required this.name,
+    required this.mask,
+    required this.isReverse,
+  });
 
   final String name;
   final String mask;
+  final bool isReverse;
 }

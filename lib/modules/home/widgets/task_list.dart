@@ -23,7 +23,6 @@ class TaskList extends StatelessWidget {
               Modular.to.pushNamed(Routes.taskForm, arguments: task.taskId);
             },
             taskStatus: task.taskStatus,
-            percentage: task.percentage ?? 0,
             title: task.taskName,
             subtitle: task.description,
             createdAt: task.createdAt,
