@@ -13,5 +13,6 @@ class AppModule extends Module {
     r.module(Routes.splash, module: SplashModule());
     r.module(Routes.login, module: LoginModule());
     r.module(Routes.home, module: HomeModule());
+    r.module(Routes.taskForm, module: TaskFormModule());
   }
 }

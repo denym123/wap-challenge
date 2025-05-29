@@ -2,35 +2,7 @@
     "users": [
         {
             "id": 1,
-            "login": "joao.silva",
-            "password": "123456",
-            "name": "João Silva",
-            "profile": "Promotor"
-        },
-        {
-            "id": 2,
-            "login": "maria.santos",
-            "password": "123456",
-            "name": "Maria Santos",
-            "profile": "Promotor"
-        },
-        {
-            "id": 3,
-            "login": "pedro.oliveira",
-            "password": "123456",
-            "name": "Pedro Oliveira",
-            "profile": "Promotor"
-        },
-        {
-            "id": 4,
-            "login": "ana.rodrigues",
-            "password": "123456",
-            "name": "Ana Rodrigues",
-            "profile": "Promotor"
-        },
-        {
-            "id": 5,
-            "login": "teste.mobile2",
+            "login": "teste.mobile",
             "password": "1234",
             "name": "Nome de teste do usuário",
             "profile": "Promotor"
@@ -63,13 +35,13 @@
             "fields": [
                 {
                     "id": 3,
-                    "label": "Nome do produto",
+                    "label": "Data de vencimento",
                     "required": true,
                     "field_type": "text"
                 },
                 {
                     "id": 4,
-                    "label": "Informe o preço",
+                    "label": "Informe a data",
                     "required": true,
                     "field_type": "mask_date"
                 }

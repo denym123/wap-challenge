@@ -6,7 +6,6 @@ class TaskWidget extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-  final double percentage;
   final String? createdAt;
   final TaskStatus taskStatus;
 
@@ -14,7 +13,6 @@ class TaskWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
-    required this.percentage,
     required this.createdAt,
     required this.taskStatus,
     required this.onTap,
@@ -51,21 +49,15 @@ class TaskWidget extends StatelessWidget {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: taskStatus.color,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Text(
-                      percentage.toString(),
+                      taskStatus.name,
                       style: Theme.of(
                         context,
                       ).textTheme.bodyMedium!.copyWith(color: Colors.white),
                     ),
-                  ),
-                },
-                if (taskStatus == TaskStatus.completed) ...{
-                  Icon(
-                    Icons.check,
-                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 },
               ],
@@ -98,32 +90,6 @@ class TaskWidget extends StatelessWidget {
                     ).colorScheme.onSurface.withValues(alpha: 0.5),
                   ),
                 ),
-                const Spacer(),
-                if (taskStatus != TaskStatus.notStarted) ...{
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        strokeWidth: 4,
-                        value: percentage,
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.1),
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.5),
-                      ),
-                      Text(
-                        percentage.toString(),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                },
               ],
             ),
           ],
