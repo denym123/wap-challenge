@@ -35,23 +35,24 @@ class LoginController with ControllerLifeCycle, LoginVariables {
         ]);
         Modular.to.navigate(Routes.home);
       },
-      catchError: (e, s) {
-        e as DioException;
-        final noConnectionError =
-            e.type == DioExceptionType.connectionTimeout ||
-            e.type == DioExceptionType.connectionError;
-
-        final userNotFoundError =
-            e.response?.statusCode == HttpStatus.forbidden;
-
-        if (noConnectionError) {
-          Messages.error('Houve um erro com a sua conexão');
-        }
-
-        if (userNotFoundError) {
-          Messages.error('Usuário ou senha inválidos');
-        }
-      },
+      catchError: (e, s) => _handleLogin(e),
     ).call();
+  }
+
+  void _handleLogin(e) {
+    e as DioException;
+    final noConnectionError =
+        e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.connectionError;
+
+    final userNotFoundError = e.response?.statusCode == HttpStatus.forbidden;
+
+    if (noConnectionError) {
+      Messages.error('Houve um erro com a sua conexão');
+    }
+
+    if (userNotFoundError) {
+      Messages.error('Usuário ou senha inválidos');
+    }
   }
 }
