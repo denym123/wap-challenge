@@ -36,9 +36,19 @@ class LoginController with ControllerLifeCycle, LoginVariables {
         Modular.to.navigate(Routes.home);
       },
       catchError: (e, s) {
-        // Normalmente o erro vem do retorno da API, mas como neste caso não,
-        // é necessário verificar o status code.
-        if ((e as DioException).response?.statusCode == HttpStatus.forbidden) {
+        e as DioException;
+        final noConnectionError =
+            e.type == DioExceptionType.connectionTimeout ||
+            e.type == DioExceptionType.connectionError;
+
+        final userNotFoundError =
+            e.response?.statusCode == HttpStatus.forbidden;
+
+        if (noConnectionError) {
+          Messages.error('Houve um erro com a sua conexão');
+        }
+
+        if (userNotFoundError) {
           Messages.error('Usuário ou senha inválidos');
         }
       },

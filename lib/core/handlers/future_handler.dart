@@ -26,10 +26,8 @@ class FutureHandler<T> {
         onValue!(response);
       }
     } catch (e, s) {
-      if (e is DioException && e.type == DioExceptionType.connectionError) {
-        await noConnectionBuilder!().then((value) {
-          future.value = AsyncData(value);
-        });
+      if (noConnectionBuilder != null) {
+        future.value = AsyncData(await noConnectionBuilder!());
         return;
       }
       if (catchError != null) {
