@@ -42,24 +42,22 @@ class TaskWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-                if (taskStatus != TaskStatus.notStarted) ...{
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: taskStatus.color,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Text(
-                      taskStatus.name,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium!.copyWith(color: Colors.white),
-                    ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
                   ),
-                },
+                  decoration: BoxDecoration(
+                    color: taskStatus.color,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Text(
+                    taskStatus.name,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                  ),
+                ),
               ],
             ),
             Text(

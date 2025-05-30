@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum TaskStatus {
-  notStarted(name: 'Não iniciado', color: Colors.white),
+  notStarted(name: 'Não iniciado', color: Colors.black),
   pending(name: 'Pendente', color: Colors.amber),
   completed(name: 'Concluído', color: Colors.green);
 
