@@ -10,7 +10,7 @@ class HttpAdapter extends DioForNative {
   }
 
   void _configureOptions() {
-    options.baseUrl = 'http://localhost:8080';
+    options.baseUrl = 'http://192.168.100.61:8080/';
     options.contentType = Headers.jsonContentType;
     options.sendTimeout = const Duration(seconds: 30);
     options.receiveTimeout = const Duration(seconds: 30);

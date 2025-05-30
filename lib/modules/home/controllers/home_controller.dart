@@ -22,7 +22,13 @@ class HomeController with ControllerLifeCycle, HomeVariables {
     MultiFutureHandler(
       secondFunction: _homeRepository.getTasks(),
       firstFunction: _homeDao.getTaskInstances(),
-      resultBuilder: (db, api) async => _buildTaskModels(db, api),
+      resultBuilder: (db, api) async {
+        final userId = await LocalSecureStorageImpl().read(
+          LocalSecureStorageConstants.userId,
+        );
+        await _homeDao.saveTasks(api, int.parse(userId!));
+        return _buildTaskModels(db, api);
+      },
       future: tasksAS,
       noConnectionBuilder: () async {
         final tasks = await _homeDao.getTasks();
