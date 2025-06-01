@@ -1,5 +1,3 @@
-import 'package:sqflite/sqflite.dart';
-
 import '../../../core/core.dart';
 import '../home.dart';
 
@@ -8,17 +6,9 @@ class HomeDao extends RepositoryLifeCycle {
     final db = await SqliteConnectionFactory().database;
     final batch = db.batch();
     for (var task in tasks) {
-      final taskId = await db.insert(
-        Tables.task,
-        task.toMap(userId),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
+      final taskId = await db.insert(Tables.task, task.toMap(userId));
       for (var field in task.fields!) {
-        batch.insert(
-          Tables.field,
-          field.toMap(taskId),
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
+        batch.insert(Tables.field, field.toMap(taskId));
       }
     }
     await batch.commit();
@@ -34,13 +24,6 @@ class HomeDao extends RepositoryLifeCycle {
     final db = await SqliteConnectionFactory().database;
     final tasks = await db.query(Tables.task);
     return List.from(tasks.map((e) => Task.fromMap(e)));
-  }
-
-  Future<void> createTaskInstance(TaskInstance task) async {
-    final db = await SqliteConnectionFactory().database;
-    final batch = db.batch();
-    batch.insert(Tables.taskInstance, task.toMap());
-    await batch.commit();
   }
 
   Future<void> clearTaskInstances() async {

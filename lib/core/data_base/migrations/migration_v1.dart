@@ -55,7 +55,7 @@ class MigrationV1 implements Migration {
       user_id     INTEGER NOT NULL,
       task_name   TEXT    NOT NULL,
       description TEXT
-  );
+    );
 ''');
 
     batch.execute('''

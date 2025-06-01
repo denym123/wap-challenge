@@ -17,9 +17,7 @@ class SplashController with ControllerLifeCycle, SplashVariables {
 
   void initApp() async {
     await Future.delayed(const Duration(seconds: 2));
-    final accessToken = await _secureStorage.read(
-      LocalSecureStorageConstants.accessToken,
-    );
+    final accessToken = await _secureStorage.read(LSSConstants.accessToken);
     if (accessToken != null) {
       Modular.to.navigate(Routes.home);
     } else {

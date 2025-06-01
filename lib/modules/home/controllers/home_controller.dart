@@ -23,9 +23,7 @@ class HomeController with ControllerLifeCycle, HomeVariables {
       secondFunction: _homeRepository.getTasks(),
       firstFunction: _homeDao.getTaskInstances(),
       resultBuilder: (db, api) async {
-        final userId = await LocalSecureStorageImpl().read(
-          LocalSecureStorageConstants.userId,
-        );
+        final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
         await _homeDao.saveTasks(api, int.parse(userId!));
         return _buildTaskModels(db, api);
       },
@@ -48,26 +46,13 @@ class HomeController with ControllerLifeCycle, HomeVariables {
       future: userAS,
       repositoryFunction: _homeRepository.getUser(),
       noConnectionBuilder: () async {
-        final userId = await LocalSecureStorageImpl().read(
-          LocalSecureStorageConstants.userId,
-        );
+        final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
         final userName = await LocalSecureStorageImpl().read(
-          LocalSecureStorageConstants.userName,
+          LSSConstants.userName,
         );
         return User(id: int.parse(userId!), name: userName!);
       },
-      onValue: (value) async {
-        Future.wait([
-          LocalSecureStorageImpl().write(
-            LocalSecureStorageConstants.userId,
-            value.id.toString(),
-          ),
-          LocalSecureStorageImpl().write(
-            LocalSecureStorageConstants.userName,
-            value.name,
-          ),
-        ]);
-      },
+      onValue: saveUser,
     ).call();
   }
 
@@ -108,7 +93,13 @@ class HomeController with ControllerLifeCycle, HomeVariables {
         }
       }
     }
-
     return taskModels;
+  }
+
+  Future<void> saveUser(user) async {
+    Future.wait([
+      LocalSecureStorageImpl().write(LSSConstants.userId, user.id.toString()),
+      LocalSecureStorageImpl().write(LSSConstants.userName, user.name),
+    ]);
   }
 }

@@ -27,7 +27,8 @@ class FutureHandler<T> {
       }
     } catch (e, s) {
       if (noConnectionBuilder != null) {
-        future.value = AsyncData(await noConnectionBuilder!());
+        final result = await noConnectionBuilder!();
+        future.value = AsyncData(result);
         return;
       }
       if (catchError != null) {

@@ -15,7 +15,7 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     final accessToken = await _localSecureStorage.read(
-      LocalSecureStorageConstants.accessToken,
+      LSSConstants.accessToken,
     );
 
     options.headers['Authorization'] = 'Bearer $accessToken';

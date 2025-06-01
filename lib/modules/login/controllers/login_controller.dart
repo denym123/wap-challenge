@@ -24,14 +24,8 @@ class LoginController with ControllerLifeCycle, LoginVariables {
       ),
       onValue: (value) async {
         await Future.wait([
-          _secureStorage.write(
-            LocalSecureStorageConstants.accessToken,
-            value!.accessToken,
-          ),
-          _secureStorage.write(
-            LocalSecureStorageConstants.refreshToken,
-            value.refreshToken,
-          ),
+          _secureStorage.write(LSSConstants.accessToken, value!.accessToken),
+          _secureStorage.write(LSSConstants.refreshToken, value.refreshToken),
         ]);
         Modular.to.navigate(Routes.home);
       },
