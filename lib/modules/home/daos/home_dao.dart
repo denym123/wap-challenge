@@ -1,3 +1,5 @@
+import 'package:sqflite/sqlite_api.dart';
+
 import '../../../core/core.dart';
 import '../home.dart';
 
@@ -6,9 +8,17 @@ class HomeDao extends RepositoryLifeCycle {
     final db = await SqliteConnectionFactory().database;
     final batch = db.batch();
     for (var task in tasks) {
-      final taskId = await db.insert(Tables.task, task.toMap(userId));
-      for (var field in task.fields!) {
-        batch.insert(Tables.field, field.toMap(taskId));
+      final taskId = await db.insert(
+        Tables.task,
+        task.toMap(userId),
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+      for (var field in task.fields) {
+        batch.insert(
+          Tables.field,
+          field.toMap(taskId),
+          conflictAlgorithm: ConflictAlgorithm.ignore,
+        );
       }
     }
     await batch.commit();

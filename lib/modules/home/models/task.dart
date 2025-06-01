@@ -4,13 +4,13 @@ class Task {
   final int taskId;
   final String taskName;
   final String description;
-  final List<Field>? fields;
+  final List<Field> fields;
 
   Task({
     required this.taskId,
     required this.taskName,
     required this.description,
-    this.fields,
+    this.fields = const [],
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
