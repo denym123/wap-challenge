@@ -12,7 +12,6 @@ class GlobalException implements Exception {
       error = {
         'route': Modular.routerDelegate.path,
         'url': httpException.url,
-        'message': httpException.message,
         'request': httpException.request,
         'response': httpException.response,
         'statusCode': httpException.statusCode,

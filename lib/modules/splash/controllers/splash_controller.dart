@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../core/core.dart';

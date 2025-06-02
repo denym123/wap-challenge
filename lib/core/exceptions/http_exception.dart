@@ -14,11 +14,6 @@ class HttpException implements Exception {
         'Data: $data';
   }
 
-  String? get message {
-    //TODO: recuperar uma formar de pegar a mensagem de erro vinda da requisição
-    return null;
-  }
-
   int? get statusCode => dioException?.response?.statusCode;
 
   Map<String, dynamic>? get request => dioException?.requestOptions.data;

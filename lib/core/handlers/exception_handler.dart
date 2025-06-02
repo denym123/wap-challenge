@@ -31,17 +31,10 @@ class ExceptionHandler {
       return;
     }
 
-    //TODO: configurar crashlytics
     final DioException dioException = e as DioException;
 
     Messages.error(
       dioException.response?.data['error'] ?? _defaultErrorMessage,
     );
-  }
-
-  String? getMessage(DioException e) {
-    //TODO: recuperar a mensagem da dioException ou a padrão, caso não tenha.
-
-    return null;
   }
 }
