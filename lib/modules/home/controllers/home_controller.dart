@@ -65,18 +65,24 @@ class HomeController with ControllerLifeCycle, HomeVariables {
     List<TaskInstance> taskInstances,
     List<Task> tasks,
   ) {
-    final List<TaskModel> taskModels = [];
-
+    final List<TaskModel> taskModelList = [];
     for (var task in tasks) {
       final instances =
           taskInstances
               .where((instance) => instance.taskId == task.taskId)
-              .toList();
-
-      final bool noInstanceInDb = instances.isEmpty;
-
-      if (noInstanceInDb) {
-        taskModels.add(
+              .firstOrNull;
+      if (instances != null) {
+        taskModelList.add(
+          TaskModel(
+            taskName: task.taskName,
+            description: task.description,
+            taskStatus: instances.taskStatus,
+            createdAt: instances.createdAt.toString(),
+            taskId: task.taskId,
+          ),
+        );
+      } else {
+        taskModelList.add(
           TaskModel(
             taskId: task.taskId,
             taskName: task.taskName,
@@ -84,21 +90,9 @@ class HomeController with ControllerLifeCycle, HomeVariables {
             taskStatus: TaskStatus.notStarted,
           ),
         );
-      } else {
-        for (var instance in instances) {
-          taskModels.add(
-            TaskModel(
-              taskName: task.taskName,
-              description: task.description,
-              taskStatus: instance.taskStatus,
-              createdAt: instance.createdAt.toString(),
-              taskId: task.taskId,
-            ),
-          );
-        }
       }
     }
-    return taskModels;
+    return taskModelList;
   }
 
   Future<void> saveUser(user) async {
