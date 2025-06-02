@@ -1,3 +1,5 @@
+import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../../core/core.dart';
 import '../../../core/handlers/multi_future_handler.dart';
 import '../home.dart';
@@ -19,9 +21,10 @@ class HomeController with ControllerLifeCycle, HomeVariables {
   }
 
   Future<void> getTasks() async {
+    final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
     MultiFutureHandler(
       secondFunction: _homeRepository.getTasks(),
-      firstFunction: _homeDao.getTaskInstances(),
+      firstFunction: _homeDao.getTaskInstances(int.parse(userId!)),
       resultBuilder: (db, api) async {
         final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
         await _homeDao.saveTasks(api, int.parse(userId!));
@@ -30,7 +33,9 @@ class HomeController with ControllerLifeCycle, HomeVariables {
       future: tasksAS,
       noConnectionBuilder: () async {
         final tasks = await _homeDao.getTasks();
-        final taskInstances = await _homeDao.getTaskInstances();
+        final taskInstances = await _homeDao.getTaskInstances(
+          int.parse(userId),
+        );
         return _buildTaskModels(taskInstances, tasks);
       },
     ).call();
@@ -97,9 +102,14 @@ class HomeController with ControllerLifeCycle, HomeVariables {
   }
 
   Future<void> saveUser(user) async {
-    Future.wait([
+    await Future.wait([
       LocalSecureStorageImpl().write(LSSConstants.userId, user.id.toString()),
       LocalSecureStorageImpl().write(LSSConstants.userName, user.name),
     ]);
+  }
+
+  void logout() {
+    LocalSecureStorageImpl().clear();
+    Modular.to.navigate(Routes.login);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:signals/signals_flutter.dart';
 
 import '../../core/core.dart';
@@ -26,7 +25,7 @@ class _HomePageState extends PageLifeCycleState<HomeController, HomePage> {
                 leading: const Icon(Icons.logout),
                 title: const Text("Sair"),
                 onTap: () {
-                  Modular.to.navigate(Routes.login);
+                  controller.logout();
                 },
               ),
             ],

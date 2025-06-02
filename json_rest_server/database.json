@@ -6,6 +6,13 @@
             "password": "1234",
             "name": "Nome de teste do usuário",
             "profile": "Promotor"
+        },
+        {
+            "id": 2,
+            "login": "denym.filho",
+            "password": "1234",
+            "name": "Dênym Filho",
+            "profile": "Testador"
         }
     ],
     "tasks": [

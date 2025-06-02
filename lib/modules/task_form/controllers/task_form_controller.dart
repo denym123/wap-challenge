@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../core/core.dart';
@@ -61,9 +63,14 @@ class TaskFormController with ControllerLifeCycle, TaskFormVariables {
   }
 
   Future<void> createTaskInstance(Task task) async {
-    taskInstance = await _taskFormDao.getTaskInstance(taskId!);
+    final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
+    taskInstance = await _taskFormDao.getTaskInstance(
+      taskId!,
+      int.parse(userId!),
+    );
     if (taskInstance == null) {
-      await _taskFormDao.createTaskInstance(taskId!);
+      final userId = await LocalSecureStorageImpl().read(LSSConstants.userId);
+      await _taskFormDao.createTaskInstance(taskId!, int.parse(userId!));
       createTaskInstance(task);
       return;
     }
@@ -81,8 +88,9 @@ class TaskFormController with ControllerLifeCycle, TaskFormVariables {
           controllers[field.id]!.text,
         );
       }
-      Modular.get<HomeController>().getTasks();
     }
+    Modular.get<HomeController>().getTasks();
+    log("tete");
   }
 
   Future<void> submitTask() async {

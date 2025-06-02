@@ -10,7 +10,7 @@ class HomeDao extends RepositoryLifeCycle {
     for (var task in tasks) {
       final taskId = await db.insert(
         Tables.task,
-        task.toMap(userId),
+        task.toMap(),
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );
       for (var field in task.fields) {
@@ -24,9 +24,13 @@ class HomeDao extends RepositoryLifeCycle {
     await batch.commit();
   }
 
-  Future<List<TaskInstance>> getTaskInstances() async {
+  Future<List<TaskInstance>> getTaskInstances(int userId) async {
     final db = await SqliteConnectionFactory().database;
-    final taskInstances = await db.query(Tables.taskInstance);
+    final taskInstances = await db.query(
+      Tables.taskInstance,
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
     return taskInstances.map((e) => TaskInstance.fromJson(e)).toList();
   }
 
@@ -41,12 +45,12 @@ class HomeDao extends RepositoryLifeCycle {
     await db.delete(Tables.taskInstance);
   }
 
-  Future<bool> verifyTaskInstance(int taskId) async {
+  Future<bool> verifyTaskInstance(int taskId, userId) async {
     final db = await SqliteConnectionFactory().database;
     final taskInstance = await db.query(
       Tables.taskInstance,
-      where: 'task_id = ?',
-      whereArgs: [taskId],
+      where: 'task_id = ?, user_id =?',
+      whereArgs: [taskId, userId],
     );
     return taskInstance.isNotEmpty;
   }

@@ -1,11 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:signals/signals.dart';
 
 class FutureHandler<T> {
   final AsyncSignal<T> future;
   Future<T> repositoryFunction;
-  ValueSetter<T>? onValue;
+  Future<void> Function(T)? onValue;
   Future<T> Function()? noConnectionBuilder;
   void Function(Object e, StackTrace s)? catchError;
 
@@ -21,10 +19,10 @@ class FutureHandler<T> {
     try {
       future.value = AsyncLoading<T>();
       final response = await repositoryFunction;
-      future.value = AsyncData(response);
       if (onValue != null) {
-        onValue!(response);
+        await onValue!(response);
       }
+      future.value = AsyncData(response);
     } catch (e, s) {
       if (noConnectionBuilder != null) {
         final result = await noConnectionBuilder!();

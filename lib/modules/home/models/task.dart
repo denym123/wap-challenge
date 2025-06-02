@@ -32,12 +32,7 @@ class Task {
     );
   }
 
-  Map<String, dynamic> toMap(int userId) {
-    return {
-      'id': taskId,
-      'task_name': taskName,
-      'description': description,
-      'user_id': userId,
-    };
+  Map<String, dynamic> toMap() {
+    return {'id': taskId, 'task_name': taskName, 'description': description};
   }
 }

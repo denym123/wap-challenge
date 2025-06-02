@@ -33,7 +33,7 @@ class LoginInputField extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           controller: controller,
-
+          autocorrect: false,
           style: Theme.of(
             context,
           ).textTheme.titleMedium!.copyWith(fontSize: 14),
@@ -85,7 +85,7 @@ class LoginInputField extends StatelessWidget {
                       icon:
                           obscureTextVNValue
                               ? Icon(
-                                Icons.visibility,
+                                Icons.visibility_off,
                                 size: 20,
                                 color:
                                     Theme.of(
@@ -93,7 +93,7 @@ class LoginInputField extends StatelessWidget {
                                     ).colorScheme.inverseSurface,
                               )
                               : Icon(
-                                Icons.visibility_off,
+                                Icons.visibility,
                                 size: 20,
                                 color:
                                     Theme.of(

@@ -26,11 +26,12 @@ class TaskFormDao {
     return List<Field>.from(result.map((e) => Field.fromMap(e)));
   }
 
-  Future<int> createTaskInstance(int taskId) async {
+  Future<int> createTaskInstance(int taskId, int userId) async {
     final db = await SqliteConnectionFactory().database;
     final result = await db.insert(Tables.taskInstance, {
       'task_id': taskId,
       'task_status': TaskStatus.pending.index,
+      'user_id': userId,
     });
     return result;
   }
@@ -48,12 +49,12 @@ class TaskFormDao {
     });
   }
 
-  Future<TaskInstance?> getTaskInstance(int taskId) async {
+  Future<TaskInstance?> getTaskInstance(int taskId, int userId) async {
     final db = await SqliteConnectionFactory().database;
     final result = await db.query(
       Tables.taskInstance,
-      where: 'task_id = ?',
-      whereArgs: [taskId],
+      where: 'task_id = ? AND user_id = ?',
+      whereArgs: [taskId, userId],
     );
     return result.isNotEmpty ? TaskInstance.fromMap(result.first) : null;
   }
@@ -76,7 +77,7 @@ class TaskFormDao {
     await db.update(
       Tables.taskInstance,
       taskInstance.toMap(),
-      where: 'task_id =?',
+      where: 'id =?',
       whereArgs: [taskInstance.id],
     );
   }
